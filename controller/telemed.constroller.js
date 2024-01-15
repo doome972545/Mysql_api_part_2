@@ -101,7 +101,6 @@ module.exports = {
                     ...item,
                     record_date: moment(item.record_date).format('YYYY-MM-DD')
                 }));
-
                 res.status(200).send(formattedResult);
             })
         }catch(e){

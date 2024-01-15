@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 12, 2024 at 08:41 AM
+-- Generation Time: Jan 15, 2024 at 05:04 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -24,6 +24,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `added_patient_to_doctor`
+--
+
+CREATE TABLE `added_patient_to_doctor` (
+  `id` int(11) NOT NULL,
+  `doctor_id` int(11) NOT NULL,
+  `patient_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `doctor_and_admin_table`
 --
 
@@ -34,16 +46,19 @@ CREATE TABLE `doctor_and_admin_table` (
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `isAdmin` tinyint(1) NOT NULL DEFAULT 0,
-  `DataPatient` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '[]'
+  `isDoctor` tinyint(1) NOT NULL DEFAULT 0,
+  `isNurse` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `doctor_and_admin_table`
 --
 
-INSERT INTO `doctor_and_admin_table` (`id`, `firstname`, `lastname`, `email`, `password`, `isAdmin`, `DataPatient`) VALUES
-(1, 'ชญานนท์', 'อุตราชา', 'domedoome9725451@gmail.com', 'doome972545', 0, '[]'),
-(6, 'admin', '', 'admin@gmail.com', 'ad123', 1, '[]');
+INSERT INTO `doctor_and_admin_table` (`id`, `firstname`, `lastname`, `email`, `password`, `isAdmin`, `isDoctor`, `isNurse`) VALUES
+(1, 'doctor', 'doctor', 'doctor@gmail.com', 'd123', 0, 1, 0),
+(6, 'admin', 'admin', 'admin@gmail.com', 'ad123', 1, 0, 0),
+(7, 'nurse', 'nurse', 'nurse@gmail.com', 'n123', 0, 0, 1),
+(8, 'user', 'user', 'user@gmail.com', 'u123', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -91,10 +106,10 @@ CREATE TABLE `id_card_information` (
 --
 
 INSERT INTO `id_card_information` (`id`, `first_name`, `last_name`, `id_number`, `date_of_birth`, `gender`, `address`, `added`) VALUES
-(1, 'ชญานนท์', 'อุตราชา', '1449600009770', '2002-07-09', 'ชาย', '26/8 บ้านแห่เหนือ ต.หนองบอน อ.โกสุมพิสัย จ.มหาสารคาม', 0),
+(1, 'ชญานนท์', 'อุตราชา', '1449600009770', '2002-07-09', 'ชาย', '26/8 บ้านแห่เหนือ ต.หนองบอน อ.โกสุมพิสัย จ.มหาสารคาม', 1),
 (2, 'ชญานนท์', 'อุตราชา', '1449600009788', '2002-07-09', 'ชาย', '26/8 บ้านแห่เหนือ ต.หนองบอน อ.โกสุมพิสัย จ.มหาสารคาม', 0),
 (4, 'ฟำพเฟำ', 'พเฟำพเฟำพ', '23523423', '2024-01-02', 'ชาย', '3tagergaergaerg', 0),
-(5, 'ชื่อ1', 'นามสกุล1', '1234567890123', '1989-12-31', 'ชาย', 'ที่อยู่1', 0);
+(5, 'ชื่อ1', 'นามสกุล1', '1234567890123', '1989-12-31', 'ชาย', 'ที่อยู่1d', 0);
 
 -- --------------------------------------------------------
 
@@ -108,14 +123,6 @@ CREATE TABLE `post` (
   `desc` varchar(255) NOT NULL,
   `image` longtext NOT NULL DEFAULT 'No image'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `post`
---
-
-INSERT INTO `post` (`id`, `title`, `desc`, `image`) VALUES
-(19, 'วลาดีมีร์ เลนิน', 'วลาดีมีร์ อิลลิช อุลยานอฟ[b] เป็นที่รู้จักกันดีในชื่อเล่นของเขาว่า เลนิน[c] (22 เมษายน [ตามปฎิทินเก่า: 10 เมษายน] ค.ศ. 1870 – 21 มกราคม ค.ศ. 1924) เป็นนักปฏิวัติ นักการเมือง และนักทฤษฎีชาวรัสเซีย เลนินดำรงตำแหน่งหัวหน้ารัฐบาล ในฐานะเป็นผู้ก่อตั้งและประมุข', 'upload-1705037285443-Vladimir_Lenin.jpg'),
-(21, 'wwww', 'strjykdtkae e tryw rthwr yjt ejy rukru66666 r6 uk6;elymjweragq 34tq;3lrm4y q4 tq,34 q3t4mq3 4 q3;4mtq34 tk;lq3m4t3 3q4t', 'upload-1705039021156-0005877_100-cotton-tee-shirt_1024.jpg');
 
 -- --------------------------------------------------------
 
@@ -145,6 +152,14 @@ INSERT INTO `sleep_data` (`sleep_id`, `id`, `sleep_time`, `record_date`) VALUES
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `added_patient_to_doctor`
+--
+ALTER TABLE `added_patient_to_doctor`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `doctor_id` (`doctor_id`),
+  ADD KEY `patient_id` (`patient_id`);
 
 --
 -- Indexes for table `doctor_and_admin_table`
@@ -183,10 +198,16 @@ ALTER TABLE `sleep_data`
 --
 
 --
+-- AUTO_INCREMENT for table `added_patient_to_doctor`
+--
+ALTER TABLE `added_patient_to_doctor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `doctor_and_admin_table`
 --
 ALTER TABLE `doctor_and_admin_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `health_data`
@@ -204,7 +225,7 @@ ALTER TABLE `id_card_information`
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `sleep_data`
@@ -215,6 +236,13 @@ ALTER TABLE `sleep_data`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `added_patient_to_doctor`
+--
+ALTER TABLE `added_patient_to_doctor`
+  ADD CONSTRAINT `doctor_id` FOREIGN KEY (`doctor_id`) REFERENCES `doctor_and_admin_table` (`id`),
+  ADD CONSTRAINT `patient_id` FOREIGN KEY (`patient_id`) REFERENCES `id_card_information` (`id`);
 
 --
 -- Constraints for table `health_data`

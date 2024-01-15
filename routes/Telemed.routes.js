@@ -3,6 +3,6 @@ const {createTelemed,getTelemed,date} = require('../controller/telemed.constroll
 
 router.post('/:id',createTelemed)
 router.get('/:id',getTelemed)
-router.post('/:id/:date',date)
+router.get('/:id/:date',date)
 
 module.exports = router;

@@ -10,6 +10,7 @@ const authRoute = require("./routes/Auth.routes")
 const adminRoute = require("./routes/Admin.routes")
 const sleepRoute = require("./routes/SleepTime.routes")
 const uploadRoute = require("./routes/UploadPost.routes")
+const addedRoute = require("./routes/AddedPatient.routes")
 
 app.use(cors())
 app.use(express.json());
@@ -20,19 +21,7 @@ app.use('/api/auth', authRoute);
 app.use('/api/sleep', sleepRoute);
 app.use('/api/admin', adminRoute);
 app.use('/api/upload', uploadRoute);
+app.use('/api/added', addedRoute);
 
-// app.post('/upload', upload.single('image'), (req, res) => {
-    
-// });
-const fs = require('fs');
-app.post('/remove', async (req, res) => {
-    await fs.unlink('uploads/' + 'upload-1704953586269-pngwing.com.png', (err) => {
-        if (err) {
-            console.log(err)
-        } else {
-            console.log('deleted successfully')
-        }
-    })
-})
 
 app.listen(port, () => console.log(`Example app listening http://localhost:${port}`));

@@ -16,11 +16,28 @@ const verifyToken = (req, res, next) => {
 
 const verifyTokenAndAdmin = (req, res, next) => {
     verifyToken(req, res, () => {
+        console.log(req.user)
         if (!req.user) {
+            console.log("No token provided")
             return res.send("is not authenticated")
         }else if(req.user.isAdmin){
             next();
         } else {
+            console.log("Token provided")
+            return res.status(403).json("You are not Admin");
+        }
+    });
+};
+const verifyTokenNurse = (req, res, next) => {
+    verifyToken(req, res, () => {
+        console.log(req.user)
+        if (!req.user) {
+            console.log("No token provided")
+            return res.send("is not authenticated")
+        }else if(req.user.isNurse){
+            next();
+        } else {
+            console.log("Token provided")
             return res.status(403).json("You are not Admin");
         }
     });
